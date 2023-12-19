@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:05:01 by pgouasmi          #+#    #+#              #
-#    Updated: 2023/12/13 15:12:53 by pgouasmi         ###   ########.fr        #
+#    Updated: 2023/12/18 18:06:36 by pgouasmi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,14 +21,17 @@ _BOLD = \033[1m
 
 OS = $(shell uname)
 
-NAME = phonebook
-CFLAGS = -Wall -Wextra -Werror -std=c++98
+NAME = MyAwesomePhonebook
+CFLAGS = -Wall -Wextra -std=c++98 -ggdb3
 RM = @rm -rf
 CC = @c++
 DIR = @mkdir -p
 PRINT = @echo
-HEADER = Includes/$(NAME).hpp
-FILES = phonebook
+HEADERS =	Includes/phonebook.hpp\
+			Includes/contact.hpp
+FILES = phonebook\
+		contact\
+		main
 
 OBJS = $(addsuffix .o, $(addprefix Objects/, $(FILES)))
 
@@ -41,7 +44,7 @@ else
 	$(PRINT) "$(OS)" > .OS
 endif
 
-Objects/%.o: Sources/%.cpp Makefile $(HEADER)
+Objects/%.o: Sources/%.cpp Makefile $(HEADERS)
 ifeq ($(OS),Linux)
 	$(DIR) Objects
 	$(PRINT) "Compiling ${_BOLD}$<$(_END)..."

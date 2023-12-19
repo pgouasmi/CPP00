@@ -3,70 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   phonebook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:40 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/13 17:14:59 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/19 16:35:27 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef PHONEBOOK_HPP
+#define PHONEBOOK_HPP
 
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include "../Includes/contact.hpp"
 
-//CLASSES
-class Contact
-{
-	//Methods
-	public: void setName(std::string NewName)
-	{
-		this->Name = NewName;
-	}
+class PhoneBook{
 
-	public: void setNickname(std::string NewNickname)
-	{
-		this->Nickname = NewNickname;
-	}
+	public:
+	PhoneBook();
+	PhoneBook(int Nbr);
 
-	public: void setNumber(std::string NewNumber)
-	{
-		this->PhoneNumber = NewNumber;
-	}
+	void		set_flags();
+	void		addContact();
+	void		update_name();
+	void		update_nickname();
+	void		update_number();
+	void		update_secret();
+	void		incrementContactNumber();
+	void		update_flags();
+	void		DisplayContactInfoIndex(int nb);
+	bool		ContactAtIndexExist(int nb);
+	void		Search();
+	std::string get_contact_name(int index) const;
 
-	public: void setSecret(std::string Secret)
-	{
-		this->DarkestSecret = Secret;
-	}
-
-	//Attributes
-	std::string Name;
-	std::string Nickname;
-	std::string PhoneNumber;
-	std::string DarkestSecret;
+	private:
+	int			ContactNbr;
+	int			InitFlags[8];
+	Contact		Contacts[8];
 };
 
-class PhoneBook
-{
-
-	//Methods
-	public: void addContact(Contact NewContact)
-	{
-		if (ContactsNbr < 8)
-			Contacts[ContactsNbr++] = NewContact;
-		else
-		{
-			for (size_t i = 0; i < 7; i++)
-				Contacts[i + 1] = Contacts[i];
-			Contacts[7] = NewContact;
-		}
-	}
-
-	//Attributes
-	class Contact Contacts[8];
-	int ContactsNbr;
-};
-
-class Add
-{
-	public: void add_contact(PhoneBook *MyPhoneBook);
-};
+#endif

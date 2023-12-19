@@ -3,39 +3,161 @@
 /*                                                        :::      ::::::::   */
 /*   phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/13 17:16:07 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/19 18:00:14 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../Includes/contact.hpp"
 #include "../Includes/phonebook.hpp"
 
-void	display_main()
+PhoneBook::PhoneBook()
 {
-	std::cout << "Type \"ADD\" to add a new contact" << std::endl;
-	std::cout << "Type \"SEARCH\" to display all the contacts saved" << std::endl;
-	std::cout << "Type \"EXIT\" to exit the program\n" << std::endl;
+	this->set_flags();
 }
 
-int	main()
+PhoneBook::PhoneBook(int Nbr)
 {
-	PhoneBook	MyPhoneBook;
-	std::string Line;
-	
-	MyPhoneBook.ContactsNbr = 0;
-	std::cout << "\\o/ Welcome to My Awesome PhoneBook \\o/\n" << std::endl;
-	display_main();
-	std::getline(std::cin, Line);
-	while (Line != "EXIT")
+	ContactNbr = Nbr;
+	this->set_flags();
+}
+
+std::string PhoneBook::get_contact_name(int index) const
+{
+	std::cout << this->ContactNbr << std::endl;
+	if (index < 0 || index > 7)
+		return ("PRBL INDEX 1");
+	else if (index > this->ContactNbr)
+		return ("PRBL INDEX 2");
+	else
 	{
-		if (Line == "ADD")
-			Add.add_contact(&MyPhoneBook);
-		std::cout << "new contact name : " << MyPhoneBook.Contacts[0].Name << std::endl;
-		display_main();
+		std::cout << "in get contact Name, Name[" << index << "] " << this->Contacts[0].Name << std::endl;
+		return this->Contacts[index].GetName();
+	}
+}
+
+void	PhoneBook::incrementContactNumber()
+{
+	this->ContactNbr++;
+	if (this->ContactNbr == 8)
+		ContactNbr = 0;
+}
+
+void	PhoneBook::update_flags()
+{
+	this->InitFlags[this->ContactNbr] = 1;
+}
+
+void	PhoneBook::addContact()
+{
+	this->update_name();
+	this->update_nickname();
+	this->update_number();
+	this->update_secret();
+	std::cout << "Contact successfully added !\n" << std::endl;
+	this->update_flags();
+	this->incrementContactNumber();
+}
+
+void	PhoneBook::update_secret()
+{
+	std::string Line;
+
+	std::cout << "Give secret :" << std::endl;
+	std::getline(std::cin, Line);
+
+	this->Contacts[this->ContactNbr].SetSecret(Line);
+}
+
+void	PhoneBook::update_number()
+{
+	std::string Line;
+
+	std::cout << "Give number :" << std::endl;
+	std::getline(std::cin, Line);
+	while (Line.find_first_not_of("0123456789") != std::string::npos || Line == "")
+	{
+		std::cout << "Phone number must be digits only. Please try again." << std::endl;
 		std::getline(std::cin, Line);
 	}
-	std::cout << MyPhoneBook.Contacts[0].Name << std::endl;
-	return 0;
+	this->Contacts[this->ContactNbr].SetNumber(Line);
+}
+
+void	PhoneBook::update_nickname()
+{
+	std::string Line;
+
+	std::cout << "Give nickame :" << std::endl;
+	std::getline(std::cin, Line);
+	this->Contacts[this->ContactNbr].SetNickname(Line);
+}
+
+void	PhoneBook::update_name()
+{
+	std::string Line;
+
+	std::cout << "Give name :" << std::endl;
+	std::getline(std::cin, Line);
+	this->Contacts[this->ContactNbr].SetName(Line);
+}
+
+void	PhoneBook::set_flags()
+{
+	int	i = 0;
+
+	while(i < 8)
+	{
+		this->InitFlags[i] = 0;
+		i++;
+	}
+}
+
+void	PhoneBook::DisplayContactInfoIndex(int nb)
+{
+	if (nb > 7 || nb < 0)
+	{
+		std::cout << "Invalid Index" << std::endl;
+		return ;
+	}
+	if (!this->InitFlags[nb])
+	{
+		std::cout << "No Contact at this index" << std::endl;
+		return ;
+	}
+	std::cout << "Displaying info for Contact number " << nb << " :" << std::endl;
+	std::cout << "Name :" << this->Contacts[nb].GetName() << std::endl;
+	std::cout << "Nickname :" << this->Contacts[nb].GetNickname() << std::endl;
+	std::cout << "Number :" << this->Contacts[nb].GetNumber() << std::endl;
+	std::cout << "Secret :" << this->Contacts[nb].GetSecret() << "\n" << std::endl;
+}
+
+void	PhoneBook::Search()
+{
+	std::string s;
+	std::cout << this->InitFlags[0] << "\n" << std::endl;
+	std::cout << "\n" << std::endl;
+	std::cout << " _________________________________________________" << std::endl;
+	std::cout << "|_________________________________________________|" << std::endl;
+	for(int i = 0; i < this->InitFlags[i] && i < 8; i++)
+	{
+		s = this->Contacts[i].GetName();
+		if (s.length() > 9)
+		{
+			s.substr(0, 8);
+			s.append(".|");
+		}
+		if (s.length() < 9)
+		{
+			for (int j = s.length(); j < 9; j++)
+				s.append(" ");
+			s.append("|");
+		}
+		std::cout << s << std::endl;
+		// std::cout << this->Contacts[i].GetName() << std::endl;
+		std::cout << this->Contacts[i].GetNickname() << "|" << std::endl;
+		std::cout << this->Contacts[i].GetNumber() << "|" << std::endl;
+		std::cout << this->Contacts[i].GetSecret() << "|" << std::endl;
+	}
 }
