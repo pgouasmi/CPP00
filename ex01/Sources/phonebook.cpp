@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/19 18:00:14 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/19 22:45:31 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,28 +136,35 @@ void	PhoneBook::DisplayContactInfoIndex(int nb)
 void	PhoneBook::Search()
 {
 	std::string s;
-	std::cout << this->InitFlags[0] << "\n" << std::endl;
-	std::cout << "\n" << std::endl;
-	std::cout << " _________________________________________________" << std::endl;
-	std::cout << "|_________________________________________________|" << std::endl;
-	for(int i = 0; i < this->InitFlags[i] && i < 8; i++)
+	std::cout << std::endl;
+	std::cout << " _______________________________________" << std::endl;
+	std::cout << "|  Name   |Nickname |Phone nb | Secret  |" << std::endl;
+	std::cout << "|_________|_________|_________|_________|" << std::endl;
+	for(int i = 0; i < 8; i++)
 	{
-		s = this->Contacts[i].GetName();
-		if (s.length() > 9)
+		if (this->InitFlags[i])
 		{
-			s.substr(0, 8);
-			s.append(".|");
+			s = this->Contacts[i].GetName();
+			s.insert(0, "|");
+			if (s.length() > 9)
+			{
+				s.substr(0, 8);
+				s.append(".|");
+			}
+			if (s.length() < 9)
+			{
+				for (int j = s.length(); j <= 9; j++)
+					s.append(" ");
+				s.append("|");
+			}
+			std::cout << s << std::endl;
 		}
-		if (s.length() < 9)
-		{
-			for (int j = s.length(); j < 9; j++)
-				s.append(" ");
-			s.append("|");
-		}
-		std::cout << s << std::endl;
+		else
+			std::cout << "|  EMPTY  |  EMPTY  |  EMPTY  |  EMPTY  |" << std::endl;
 		// std::cout << this->Contacts[i].GetName() << std::endl;
-		std::cout << this->Contacts[i].GetNickname() << "|" << std::endl;
-		std::cout << this->Contacts[i].GetNumber() << "|" << std::endl;
-		std::cout << this->Contacts[i].GetSecret() << "|" << std::endl;
+		// std::cout << this->Contacts[i].GetNickname() << "|" << std::endl;
+		// std::cout << this->Contacts[i].GetNumber() << "|" << std::endl;
+		// std::cout << this->Contacts[i].GetSecret() << "|" << std::endl;
 	}
+	std::cout << "|_________|_________|_________|_________|\n" << std::endl;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:21:32 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/19 16:35:16 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/19 22:23:23 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ int	main()
 		display_main();
 		std::getline(std::cin, Line);
 	}
-	std::cout << MyPhoneBook.get_contact_name(0) << std::endl;
+	// std::cout << MyPhoneBook.get_contact_name(0) << std::endl;
 	return 0;
 }
