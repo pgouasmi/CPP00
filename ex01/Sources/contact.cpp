@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:22:43 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/19 15:52:47 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:53:55 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,14 @@
 
 Contact::Contact() {}
 
-void	Contact::SetName(std::string str)
+void	Contact::SetFirstName(std::string str)
 {
-	this->Name = str;
+	this->FirstName = str;
+}
+
+void	Contact::SetLastName(std::string str)
+{
+	this->LastName = str;
 }
 
 void	Contact::SetNickname(std::string str)
@@ -31,9 +36,14 @@ void	Contact::SetSecret(std::string str)
 {
 	DarkestSecret = str;
 }
-std::string	Contact::GetName() const
+std::string	Contact::GetFirstName() const
 {
-	return Name;
+	return FirstName;
+}
+
+std::string	Contact::GetLastName() const
+{
+	return LastName;
 }
 
 std::string	Contact::GetNickname() const

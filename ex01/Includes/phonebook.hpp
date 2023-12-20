@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:40 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/19 16:35:27 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/20 18:22:14 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <iomanip>
+#include <sstream>
 #include "../Includes/contact.hpp"
 
 class PhoneBook{
@@ -24,22 +26,26 @@ class PhoneBook{
 	PhoneBook();
 	PhoneBook(int Nbr);
 
-	void		set_flags();
-	void		addContact();
-	void		update_name();
-	void		update_nickname();
-	void		update_number();
-	void		update_secret();
-	void		incrementContactNumber();
-	void		update_flags();
+	void		InitFlags();
+	void		AddContact();
+	void		SetFirstName();
+	void		SetLastName();
+	void		SetNickname();
+	void		SetNumber();
+	void		SetSecret();
+	void		IncrementContactNumber();
+	void		UpdateFlags();
 	void		DisplayContactInfoIndex(int nb);
+	void		DisplayAllInfo(int nbr);
+	void		DisplayContactInfoArray(int ContactIndex);
+	void		FormatOutput(std::string ToDisplay);
 	bool		ContactAtIndexExist(int nb);
 	void		Search();
-	std::string get_contact_name(int index) const;
+	std::string GetContactName(int index) const;
 
 	private:
 	int			ContactNbr;
-	int			InitFlags[8];
+	int			Flags[8];
 	Contact		Contacts[8];
 };
 
