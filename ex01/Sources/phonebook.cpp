@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/20 18:50:58 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/23 10:30:56 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/contact.hpp"
 #include "../Includes/phonebook.hpp"
+#include <string>
+#include <sstream>
 
 PhoneBook::PhoneBook()
 {
@@ -201,26 +203,28 @@ void	PhoneBook::Search()
 	std::cout << "|__________|__________|__________|__________|\n" << std::endl;
 	std::cout << "Type the Index of the contact you want to display" << std::endl;
 	std::string Line;
-	std::getline(std::cin, Line);
-	if (std::cin.eof())
-		std::exit(1);
 	int nbr;
-	// while (1)
-	// {
-	// 	std::getline(std::cin, Line);
-	// 	if (std::cin.eof())
-	// 		std::exit(1);
-	// 	else if (Line == "")
-	// 		std::cout << "Empty input. Please try again" << std::endl;
-	// 	else if (Line.find_first_not_of("0123456789") != std::string::npos)
-	// 		std::cout << "Index must be digits only. Please try again." << std::endl;
-	// 	nbr = Line.at(0) - 48;
-	// 	std::cout << nbr << std::endl;
-	// 	// else if (nbr < 0 || nbr > 7 || !this->Flags[nbr])
-	// 	// 	std::cout << "Invalid Input. The index must be positive, not greater than 7 and must correspond to an existing Contact." << std::endl;
-	// 	else
-	// 		break;
-	// 	std::getline(std::cin, Line);
-	// }
-	// this->DisplayAllInfo(nbr);
+	while (1)
+	{
+		std::getline(std::cin, Line);
+		if (std::cin.eof())
+			std::exit(1);
+		else if (Line == "")
+			std::cout << "Empty input. Please try again" << std::endl;
+		else if (Line.find_first_not_of("0123456789") != std::string::npos)
+			std::cout << "Index must be digits only. Please try again." << std::endl;
+		else
+		{
+			std::stringstream cast(Line);
+			cast >> nbr;
+			// std::cout << nbr << std::endl;
+			if (nbr < 0 || nbr > 7 || !this->Flags[nbr])
+				std::cout << "Invalid Input. The index must be positive, not greater than 7 and must correspond to an existing Contact." << std::endl;
+			else
+				break ;
+		}
+		std::getline(std::cin, Line);
+	}
+	this->DisplayContactInfoIndex(nbr);
+	std::w
 }
