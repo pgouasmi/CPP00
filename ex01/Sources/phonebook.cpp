@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/23 10:30:56 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/12/24 12:31:01 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	PhoneBook::SetSecret()
 {
 	std::string Line;
 
-	std::cout << "Give secret :" << std::endl;
+	std::cout << "\nType " << this->Contacts[this->ContactNbr].GetFirstName() << "'s Darkest Secret :" << std::endl;
 	std::getline(std::cin, Line);
 	if (std::cin.eof())
 		std::exit(1);
@@ -79,13 +79,18 @@ void	PhoneBook::SetNumber()
 {
 	std::string Line;
 
-	std::cout << "Give number :" << std::endl;
+	std::cout << "\nType " << this->Contacts[this->ContactNbr].GetFirstName() << "'s Phone Number :" << std::endl;
 	std::getline(std::cin, Line);
-	while (Line.find_first_not_of("0123456789") != std::string::npos || Line == "")
+	while (1)
 	{
 		if (std::cin.eof())
 			std::exit(1);
-		std::cout << "Phone number must be digits only. Please try again." << std::endl;
+		else if (Line.find_first_not_of("0123456789") != std::string::npos)
+			std::cout << "Phone number must be digits only. Please try again." << std::endl;
+		else if (Line.empty())
+			std::cout << "Input needed, please type again :" << std::endl;
+		else
+			break ;
 		std::getline(std::cin, Line);
 	}
 	this->Contacts[this->ContactNbr].SetNumber(Line);
@@ -95,10 +100,17 @@ void	PhoneBook::SetNickname()
 {
 	std::string Line;
 
-	std::cout << "Give nickame :" << std::endl;
-	std::getline(std::cin, Line);
-	if (std::cin.eof())
-		std::exit(1);
+	std::cout << "\nType " << this->Contacts[this->ContactNbr].GetFirstName() << "'s Nickname :" << std::endl;
+	while (1)
+	{
+		std::getline(std::cin, Line);
+		if (std::cin.eof())
+			std::exit(1);
+		else if (Line.empty())
+			std::cout << "Input needed, please type again :" << std::endl;
+		else 
+			break ;
+	}
 	this->Contacts[this->ContactNbr].SetNickname(Line);
 }
 
@@ -106,10 +118,17 @@ void	PhoneBook::SetFirstName()
 {
 	std::string Line;
 
-	std::cout << "Give name :" << std::endl;
-	std::getline(std::cin, Line);
-	if (std::cin.eof())
-		std::exit(1);
+	std::cout << "Type your new contact's first Name :" << std::endl;
+	while (1)
+	{
+		std::getline(std::cin, Line);
+		if (std::cin.eof())
+			std::exit(1);
+		else if (Line.empty())
+			std::cout << "Input needed, please type again :" << std::endl;
+		else 
+			break ;
+	}
 	this->Contacts[this->ContactNbr].SetFirstName(Line);
 }
 
@@ -117,10 +136,17 @@ void	PhoneBook::SetLastName()
 {
 	std::string Line;
 
-	std::cout << "Give Last Name :" << std::endl;
-	std::getline(std::cin, Line);
-	if (std::cin.eof())
-		std::exit(1);
+	std::cout << "\nType " << this->Contacts[this->ContactNbr].GetFirstName() << "'s Last Name :" << std::endl;
+	while (1)
+	{
+		std::getline(std::cin, Line);
+		if (std::cin.eof())
+			std::exit(1);
+		else if (Line.empty())
+			std::cout << "Input needed, please type again :" << std::endl;
+		else 
+			break ;
+	}
 	this->Contacts[this->ContactNbr].SetLastName(Line);
 }
 
@@ -169,7 +195,6 @@ void	PhoneBook::DisplayContactInfoArray(int ContactIndex)
 {
 	std::ostringstream s;
 	s << ContactIndex;
-	// std::cout << s.str() << std::endl;
 	FormatOutput(s.str());
 	FormatOutput(this->Contacts[ContactIndex].GetFirstName());
 	FormatOutput(this->Contacts[ContactIndex].GetLastName());
@@ -201,7 +226,8 @@ void	PhoneBook::Search()
 			std::cout << "|     EMPTY|     EMPTY|     EMPTY|     EMPTY|" << std::endl;
 	}
 	std::cout << "|__________|__________|__________|__________|\n" << std::endl;
-	std::cout << "Type the Index of the contact you want to display" << std::endl;
+	std::cout << "Type the Index of the contact you want to display :" << std::endl;
+	std::cout << "Type \"MENU\" to go back to main menu" << std::endl;
 	std::string Line;
 	int nbr;
 	while (1)
@@ -209,22 +235,24 @@ void	PhoneBook::Search()
 		std::getline(std::cin, Line);
 		if (std::cin.eof())
 			std::exit(1);
-		else if (Line == "")
+		else if (Line.empty())
 			std::cout << "Empty input. Please try again" << std::endl;
+		else if (Line == "MENU")
+		{
+			std::cout << std::endl;
+			return ;
+		}
 		else if (Line.find_first_not_of("0123456789") != std::string::npos)
 			std::cout << "Index must be digits only. Please try again." << std::endl;
 		else
 		{
 			std::stringstream cast(Line);
 			cast >> nbr;
-			// std::cout << nbr << std::endl;
 			if (nbr < 0 || nbr > 7 || !this->Flags[nbr])
 				std::cout << "Invalid Input. The index must be positive, not greater than 7 and must correspond to an existing Contact." << std::endl;
 			else
 				break ;
 		}
-		std::getline(std::cin, Line);
 	}
 	this->DisplayContactInfoIndex(nbr);
-	std::w
 }
