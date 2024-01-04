@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   phonebook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/24 12:31:01 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2024/01/04 16:50:19 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,16 @@ void	PhoneBook::SetSecret()
 
 	std::cout << "\nType " << this->Contacts[this->ContactNbr].GetFirstName() << "'s Darkest Secret :" << std::endl;
 	std::getline(std::cin, Line);
-	if (std::cin.eof())
-		std::exit(1);
+	while (1)
+	{
+		if (std::cin.eof())
+			std::exit(1);
+		else if (Line.empty())
+			std::cout << "Input needed, please type again :" << std::endl;
+		else
+			break ;
+		std::getline(std::cin, Line);
+	}
 	this->Contacts[this->ContactNbr].SetSecret(Line);
 }
 
@@ -108,7 +116,7 @@ void	PhoneBook::SetNickname()
 			std::exit(1);
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
-		else 
+		else
 			break ;
 	}
 	this->Contacts[this->ContactNbr].SetNickname(Line);
@@ -126,7 +134,7 @@ void	PhoneBook::SetFirstName()
 			std::exit(1);
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
-		else 
+		else
 			break ;
 	}
 	this->Contacts[this->ContactNbr].SetFirstName(Line);
@@ -144,7 +152,7 @@ void	PhoneBook::SetLastName()
 			std::exit(1);
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
-		else 
+		else
 			break ;
 	}
 	this->Contacts[this->ContactNbr].SetLastName(Line);
