@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phonebook.hpp                                      :+:      :+:    :+:   */
+/*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:40 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/23 10:09:48 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2024/01/05 13:41:40 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 
 #include <iostream>
 #include <string>
-#include <algorithm>
 #include <iomanip>
 #include <sstream>
-#include "../Includes/contact.hpp"
+#include "./Contact.hpp"
 
 class PhoneBook{
 

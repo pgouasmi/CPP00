@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   phonebook.cpp                                      :+:      :+:    :+:   */
+/*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2024/01/04 16:50:19 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2024/01/05 13:44:08 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/contact.hpp"
-#include "../Includes/phonebook.hpp"
-#include <string>
-#include <sstream>
+#include "./Contact.hpp"
+#include "./PhoneBook.hpp"
 
 PhoneBook::PhoneBook()
 {
+	ContactNbr = 0;
 	this->InitFlags();
 }
 
@@ -171,22 +170,12 @@ void	PhoneBook::InitFlags()
 
 void	PhoneBook::DisplayContactInfoIndex(int nb)
 {
-	if (nb > 7 || nb < 0)
-	{
-		std::cout << "Invalid Index" << std::endl;
-		return ;
-	}
-	if (!this->Flags[nb])
-	{
-		std::cout << "No Contact at this index" << std::endl;
-		return ;
-	}
-	std::cout << "Displaying info for Contact number " << nb << " :" << std::endl;
-	std::cout << "First Name :" << this->Contacts[nb].GetFirstName() << std::endl;
-	std::cout << "Last Name :" << this->Contacts[nb].GetLastName() << std::endl;
-	std::cout << "Nickname :" << this->Contacts[nb].GetNickname() << std::endl;
-	std::cout << "Number :" << this->Contacts[nb].GetNumber() << std::endl;
-	std::cout << "Secret :" << this->Contacts[nb].GetSecret() << "\n" << std::endl;
+	std::cout << "\nDisplaying info for Contact number " << nb << " :" << std::endl;
+	std::cout << "First Name: " << this->Contacts[nb].GetFirstName() << std::endl;
+	std::cout << "Last Name: " << this->Contacts[nb].GetLastName() << std::endl;
+	std::cout << "Nickname: " << this->Contacts[nb].GetNickname() << std::endl;
+	std::cout << "Number: " << this->Contacts[nb].GetNumber() << std::endl;
+	std::cout << "Secret: " << this->Contacts[nb].GetSecret() << "\n" << std::endl;
 }
 
 void	PhoneBook::FormatOutput(std::string ToDisplay)
@@ -209,19 +198,11 @@ void	PhoneBook::DisplayContactInfoArray(int ContactIndex)
 	FormatOutput(this->Contacts[ContactIndex].GetNickname());
 	std::cout << "|" << std::endl;
 }
-void	PhoneBook::DisplayAllInfo(int nbr)
-{
-	std::cout << "First Name : " << this->Contacts[nbr].GetFirstName() << std::endl;
-	std::cout << "Last Name : " << this->Contacts[nbr].GetLastName() << std::endl;
-	std::cout << "Last Name : " << this->Contacts[nbr].GetNickname() << std::endl;
-	std::cout << "Last Name : " << this->Contacts[nbr].GetNumber() << std::endl;
-	std::cout << "Last Name : " << this->Contacts[nbr].GetSecret() << "\n" << std::endl;
-
-}
 
 void	PhoneBook::Search()
 {
 	std::string s;
+
 	std::cout << std::endl;
 	std::cout << " ___________________________________________" << std::endl;
 	std::cout << "|Index     |1st Name  |Last Name |Nickname  |" << std::endl;
@@ -231,15 +212,15 @@ void	PhoneBook::Search()
 		if (this->Flags[i])
 			this->DisplayContactInfoArray(i);
 		else
-			std::cout << "|     EMPTY|     EMPTY|     EMPTY|     EMPTY|" << std::endl;
+			std::cout << "|         " << i << "|     EMPTY|     EMPTY|     EMPTY|" << std::endl;
 	}
 	std::cout << "|__________|__________|__________|__________|\n" << std::endl;
-	std::cout << "Type the Index of the contact you want to display :" << std::endl;
-	std::cout << "Type \"MENU\" to go back to main menu" << std::endl;
 	std::string Line;
 	int nbr;
 	while (1)
 	{
+		std::cout << "Type \"MENU\" to go back to main menu" << std::endl;
+		std::cout << "Or type the Index of the contact you want to display :" << std::endl;
 		std::getline(std::cin, Line);
 		if (std::cin.eof())
 			std::exit(1);
@@ -257,7 +238,7 @@ void	PhoneBook::Search()
 			std::stringstream cast(Line);
 			cast >> nbr;
 			if (nbr < 0 || nbr > 7 || !this->Flags[nbr])
-				std::cout << "Invalid Input. The index must be positive, not greater than 7 and must correspond to an existing Contact." << std::endl;
+				std::cout << "Invalid Input.\nThe index must be positive, not greater than 7 and must correspond to an existing Contact.\n" << std::endl;
 			else
 				break ;
 		}

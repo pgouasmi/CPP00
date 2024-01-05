@@ -6,26 +6,19 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/18 11:21:32 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/12/20 13:43:17 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2024/01/05 13:48:38 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/phonebook.hpp"
-#include "../Includes/contact.hpp"
+#include "./PhoneBook.hpp"
+#include "./Contact.hpp"
 
 void	display_main()
 {
-	std::cout << "Type \"ADD\" to add a new contact" << std::endl;
+	std::cout << "Type \"ADD\" to create a new contact" << std::endl;
 	std::cout << "Type \"SEARCH\" to display all the contacts saved" << std::endl;
 	std::cout << "Type \"EXIT\" to exit the program\n" << std::endl;
 }
-/*
-to do
--CTRL D pour chaque getline
--Ajouter attribut last name
--Utiliser bon nommage variables, attributs et methodes
--
-*/
 int	main()
 {
 	std::string Line;
@@ -38,11 +31,12 @@ int	main()
 	{
 		if (Line == "ADD")
 			MyPhoneBook.AddContact();
-		if (Line == "SEARCH")
+		else if (Line == "SEARCH")
 			MyPhoneBook.Search();
+		else
+			std::cout << "Invalid Input. Please try again :" << std::endl;
 		display_main();
 		std::getline(std::cin, Line);
 	}
-	// std::cout << MyPhoneBook.get_contact_name(0) << std::endl;
 	return 0;
 }

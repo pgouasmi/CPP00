@@ -6,7 +6,7 @@
 #    By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/13 15:05:01 by pgouasmi          #+#    #+#              #
-#    Updated: 2023/12/18 18:06:36 by pgouasmi         ###   ########.fr        #
+#    Updated: 2024/01/05 13:37:50 by pgouasmi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,45 +19,35 @@ _RED = \033[31m
 _END = \033[0m
 _BOLD = \033[1m
 
-OS = $(shell uname)
-
 NAME = MyAwesomePhonebook
-CFLAGS = -Wall -Wextra -std=c++98 -ggdb3
+CFLAGS = -Wall -Wextra -Werror -std=c++98
 RM = @rm -rf
 CC = @c++
 DIR = @mkdir -p
 PRINT = @echo
-HEADERS =	Includes/phonebook.hpp\
-			Includes/contact.hpp
-FILES = phonebook\
-		contact\
+HEADERS =	./PhoneBook.hpp\
+			./Contact.hpp
+FILES = PhoneBook\
+		Contact\
 		main
 
 OBJS = $(addsuffix .o, $(addprefix Objects/, $(FILES)))
 
 $(NAME): $(OBJS)
-ifeq ($(OS),Linux)
 	$(PRINT) "\n${_YELLOW}Making $(NAME)...${_END}"
 	$(CC) $(OBJS) -o $(NAME)
 	$(PRINT) "${_BOLD}${_GREEN}$(NAME) done.\a${_END}"
-else
-	$(PRINT) "$(OS)" > .OS
-endif
 
-Objects/%.o: Sources/%.cpp Makefile $(HEADERS)
-ifeq ($(OS),Linux)
+
+Objects/%.o: ./%.cpp Makefile $(HEADERS)
 	$(DIR) Objects
 	$(PRINT) "Compiling ${_BOLD}$<$(_END)..."
 	$(CC) -c $(CFLAGS) $< -o $@
-else
-	$(PRINT) "$(OS)" > .OS
-endif
 
 all: $(NAME)
 
 clean:
 	$(PRINT) "\n${_BOLD}Cleaning Objects...${_END}"
-	$(RM) .OS
 	$(RM) $(OBJS)
 	$(PRINT) "${_BOLD}${_GREEN}Objects cleaned.\a${_END}"
 
@@ -68,16 +58,10 @@ fclean:
 	$(RM) Objects
 	$(PRINT) "${_RED}Deleting $(NAME)...${_END}"
 	$(RM) $(NAME)
-	$(RM) .OS
 	$(PRINT) "${_GREEN}Objects cleaned.${_END}"
 	$(PRINT) "${_GREEN}Objects directory deleted.${_END}"
 	$(PRINT) "${_GREEN}$(NAME) deleted.\a\n${_END}"
 
 re: fclean all
 
-norminette:
-	$(PRINT) "\n${_BOLD}Waiting for norminette...${_END}"
-	$(NORM)
-	$(PRINT) "${_BOLD}Norminette done.${_END}"
-
-.PHONY: all clean fclean re norminette $(LIBFT) $(MLX)
+.PHONY: all clean fclean re norminette
