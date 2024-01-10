@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.hpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:40 by pgouasmi          #+#    #+#             */
-/*   Updated: 2024/01/05 13:41:40 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2024/01/10 11:44:35 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ class PhoneBook{
 	void		IncrementContactNumber();
 	void		UpdateFlags();
 	void		DisplayContactInfoIndex(int nb);
-	void		DisplayAllInfo(int nbr);
+	void		DisplayAllInfo(int nbr) const;
 	void		DisplayContactInfoArray(int ContactIndex);
 	void		FormatOutput(std::string ToDisplay);
-	bool		ContactAtIndexExist(int nb);
+	bool		ContactAtIndexExist(int nb) const;
 	std::string GetContactName(int index) const;
 };
 
