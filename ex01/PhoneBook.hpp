@@ -24,14 +24,20 @@ class PhoneBook{
 	public:
 	PhoneBook();
 	PhoneBook(int Nbr);
-
-	void		InitFlags();
 	void		AddContact();
+	void		Search();
+
+	private:
+	int			ContactNbr;
+	int			Flags[8];
+	Contact		Contacts[8];
+
 	void		SetFirstName();
 	void		SetLastName();
 	void		SetNickname();
 	void		SetNumber();
 	void		SetSecret();
+	void		InitFlags();
 	void		IncrementContactNumber();
 	void		UpdateFlags();
 	void		DisplayContactInfoIndex(int nb);
@@ -39,13 +45,7 @@ class PhoneBook{
 	void		DisplayContactInfoArray(int ContactIndex);
 	void		FormatOutput(std::string ToDisplay);
 	bool		ContactAtIndexExist(int nb);
-	void		Search();
 	std::string GetContactName(int index) const;
-
-	private:
-	int			ContactNbr;
-	int			Flags[8];
-	Contact		Contacts[8];
 };
 
 #endif

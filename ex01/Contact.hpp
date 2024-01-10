@@ -21,17 +21,16 @@ class Contact
 {
 	public:
 	Contact();
-	void	SetFirstName(std::string str);
-	void	SetLastName(std::string str);
-	void	SetNickname(std::string str);
-	void	SetNumber(std::string str);
-	void	SetSecret(std::string str);
-
 	std::string	GetFirstName() const;
 	std::string GetLastName() const;
 	std::string	GetNickname() const;
 	std::string	GetNumber() const;
 	std::string	GetSecret() const;
+	void	SetFirstName(std::string str);
+	void	SetLastName(std::string str);
+	void	SetNickname(std::string str);
+	void	SetNumber(std::string str);
+	void	SetSecret(std::string str);
 
 	private:
 	std::string FirstName;
