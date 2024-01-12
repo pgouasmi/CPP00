@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   PhoneBook.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 15:04:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2024/01/10 11:44:32 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2024/01/12 13:34:08 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./Contact.hpp"
 #include "./PhoneBook.hpp"
+
+int	ParseUnknownChar(std::string Line);
+int	ParseOnlyWs(std::string Line);
 
 PhoneBook::PhoneBook()
 {
@@ -51,19 +54,25 @@ void	PhoneBook::UpdateFlags()
 	this->Flags[this->ContactNbr] = 1;
 }
 
-void	PhoneBook::AddContact()
+int	PhoneBook::AddContact()
 {
-	this->SetFirstName();
-	this->SetLastName();
-	this->SetNickname();
-	this->SetNumber();
-	this->SetSecret();
+	if (this->SetFirstName())
+		return 1;
+	if (this->SetLastName())
+		return 1;
+	if (this->SetNickname())
+		return 1;
+	if (this->SetNumber())
+		return 1;
+	if (this->SetSecret())
+		return 1;
 	std::cout << "\nContact successfully added !\n" << std::endl;
 	this->UpdateFlags();
 	this->IncrementContactNumber();
+	return (0);
 }
 
-void	PhoneBook::SetSecret()
+int	PhoneBook::SetSecret()
 {
 	std::string Line;
 
@@ -72,17 +81,22 @@ void	PhoneBook::SetSecret()
 	while (1)
 	{
 		if (std::cin.eof())
-			std::exit(1);
+			return 1;
+		else if (ParseUnknownChar(Line))
+			std::cout << "Unrecognised character detected. Please try again" << std::endl;
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
+		else if (ParseOnlyWs(Line))
+			std::cout << "Input is only made of White Spaces. Please try again" << std::endl;
 		else
 			break ;
 		std::getline(std::cin, Line);
 	}
 	this->Contacts[this->ContactNbr].SetSecret(Line);
+	return 0;
 }
 
-void	PhoneBook::SetNumber()
+int	PhoneBook::SetNumber()
 {
 	std::string Line;
 
@@ -91,19 +105,24 @@ void	PhoneBook::SetNumber()
 	while (1)
 	{
 		if (std::cin.eof())
-			std::exit(1);
+			return 1;
+		else if (ParseUnknownChar(Line))
+			std::cout << "Unrecognised character detected. Please try again" << std::endl;
 		else if (Line.find_first_not_of("0123456789") != std::string::npos)
 			std::cout << "Phone number must be digits only. Please try again." << std::endl;
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
+		else if (ParseOnlyWs(Line))
+			std::cout << "Input is only made of White Spaces. Please try again" << std::endl;
 		else
 			break ;
 		std::getline(std::cin, Line);
 	}
 	this->Contacts[this->ContactNbr].SetNumber(Line);
+	return (0);
 }
 
-void	PhoneBook::SetNickname()
+int	PhoneBook::SetNickname()
 {
 	std::string Line;
 
@@ -112,16 +131,21 @@ void	PhoneBook::SetNickname()
 	{
 		std::getline(std::cin, Line);
 		if (std::cin.eof())
-			std::exit(1);
+			return 1;
+		else if (ParseUnknownChar(Line))
+			std::cout << "Unrecognised character detected. Please try again" << std::endl;
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
+		else if (ParseOnlyWs(Line))
+			std::cout << "Input is only made of White Spaces. Please try again" << std::endl;
 		else
 			break ;
 	}
 	this->Contacts[this->ContactNbr].SetNickname(Line);
+	return (0);
 }
 
-void	PhoneBook::SetFirstName()
+int	PhoneBook::SetFirstName()
 {
 	std::string Line;
 
@@ -130,16 +154,23 @@ void	PhoneBook::SetFirstName()
 	{
 		std::getline(std::cin, Line);
 		if (std::cin.eof())
-			std::exit(1);
+			return (1);
+		else if (ParseUnknownChar(Line))
+			std::cout << "Unrecognised character detected. Please try again" << std::endl;
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
+		else if (ParseUnknownChar(Line))
+			std::cout << "Unrecognised character detected. Please try again" << std::endl;
+		else if (ParseOnlyWs(Line))
+			std::cout << "Input is only made of White Spaces. Please try again" << std::endl;
 		else
 			break ;
 	}
 	this->Contacts[this->ContactNbr].SetFirstName(Line);
+	return 0;
 }
 
-void	PhoneBook::SetLastName()
+int	PhoneBook::SetLastName()
 {
 	std::string Line;
 
@@ -148,13 +179,18 @@ void	PhoneBook::SetLastName()
 	{
 		std::getline(std::cin, Line);
 		if (std::cin.eof())
-			std::exit(1);
+			return (1);
 		else if (Line.empty())
 			std::cout << "Input needed, please type again :" << std::endl;
+		else if (ParseUnknownChar(Line))
+			std::cout << "Unrecognised character detected. Please try again" << std::endl;
+		else if (ParseOnlyWs(Line))
+			std::cout << "Input is only made of White Spaces. Please try again" << std::endl;
 		else
 			break ;
 	}
 	this->Contacts[this->ContactNbr].SetLastName(Line);
+	return (0);
 }
 
 void	PhoneBook::InitFlags()
@@ -182,7 +218,7 @@ void	PhoneBook::FormatOutput(std::string ToDisplay)
 {
 	std::size_t	len = ToDisplay.length();
 	std::cout << "|" << std::flush;
-	if (len >= 10)
+	if (len > 10)
 		std::cout << ToDisplay.substr(0, 9) << "." << std::flush;
 	else
 		std::cout << std::setw(10) << ToDisplay << std::flush;
@@ -199,7 +235,7 @@ void	PhoneBook::DisplayContactInfoArray(int ContactIndex)
 	std::cout << "|" << std::endl;
 }
 
-void	PhoneBook::Search()
+int	PhoneBook::Search()
 {
 	std::string s;
 
@@ -223,13 +259,17 @@ void	PhoneBook::Search()
 		std::cout << "Or type the Index of the contact you want to display :" << std::endl;
 		std::getline(std::cin, Line);
 		if (std::cin.eof())
-			std::exit(1);
+			return (1);
+		else if (ParseUnknownChar(Line))
+			std::cout << "Unrecognised character detected. Please try again" << std::endl;
+		else if (ParseOnlyWs(Line))
+			std::cout << "Input is only made of White Spaces. Please try again" << std::endl;
 		else if (Line.empty())
 			std::cout << "Empty input. Please try again" << std::endl;
 		else if (Line == "MENU")
 		{
 			std::cout << std::endl;
-			return ;
+			return (2);
 		}
 		else if (Line.find_first_not_of("0123456789") != std::string::npos)
 			std::cout << "Index must be digits only. Please try again." << std::endl;
@@ -244,4 +284,5 @@ void	PhoneBook::Search()
 		}
 	}
 	this->DisplayContactInfoIndex(nbr);
+	return (0);
 }
